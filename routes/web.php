@@ -62,6 +62,7 @@ Route::group(['prefix' => 'admin'], function () {
                 Route::get('/create', 'create')->name('create');
                 Route::get('/{category}/edit', 'edit')->name('edit');
                 Route::put('/{category}', 'update')->name('update');
+                Route::delete('/{category}', 'destroy')->name('destroy');
             }
         );
     });

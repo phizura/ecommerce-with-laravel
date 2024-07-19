@@ -1,6 +1,4 @@
-@extends('admin.layouts.main')
-
-@section('content')
+@extends('admin.layouts.main') @section('content')
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid my-2">
@@ -24,9 +22,9 @@
                 <form action="{{ route('categories.index') }}">
                     <div class="card-header">
                         <div class="card-tools">
-                            <div class="input-group input-group" style="width: 250px;">
+                            <div class="input-group input-group" style="width: 250px">
                                 <input type="text" name="keyword" class="form-control float-right"
-                                    value="{{ request('keyword') }}" placeholder="Search">
+                                    value="{{ request('keyword') }}" placeholder="Search" />
 
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-default">
@@ -73,10 +71,9 @@
                                                 </svg>
                                             @endif
                                         </td>
-                                        <td>
+                                        <td class="d-inline-flex">
                                             <a href="{{ route('categories.edit', $category->id) }}" data-mdb-popover-init
-                                                title="Edit"
-                                                data-mdb-trigger="hover">
+                                                title="Edit" data-mdb-trigger="hover">
                                                 <svg class="filament-link-icon w-4 h-4 mr-1"
                                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                                     fill="currentColor" aria-hidden="true">
@@ -85,27 +82,30 @@
                                                     </path>
                                                 </svg>
                                             </a>
-                                            <a href="#" class="text-danger w-4 h-4 mr-1">
-                                                <svg wire:loading.remove.delay="" wire:target=""
-                                                    class="filament-link-icon w-4 h-4 mr-1"
-                                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                                    fill="currentColor" aria-hidden="true">
-                                                    <path ath fill-rule="evenodd"
-                                                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                            </a>
+                                            <form action="{{ route('categories.destroy', $category->id) }}" method="post"
+                                                id="delete-form">
+                                                @csrf @method('delete')
+                                                <button class="text-danger w-4 h-4 mr-1 border-0 bg-transparent"
+                                                    data-mdb-popover-init title="Delete" data-mdb-trigger="hover"
+                                                    id="delete-button">
+                                                    <svg wire:loading.remove.delay="" wire:target=""
+                                                        class="filament-link-icon w-4 h-4 mr-1"
+                                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                        fill="currentColor" aria-hidden="true">
+                                                        <path ath fill-rule="evenodd"
+                                                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                            clip-rule="evenodd"></path>
+                                                    </svg>
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="5">
-                                        Data not found.
-                                    </td>
+                                    <td colspan="5">Data not found.</td>
                                 </tr>
                             @endif
-
                         </tbody>
                     </table>
                 </div>
@@ -120,4 +120,28 @@
 @endsection
 
 @section('customJS')
+    <script>
+        $(document).ready(function() {
+            const forms = document.querySelectorAll("#delete-form");
+
+            forms.forEach((form) => {
+                form.addEventListener('submit', (event) => {
+                    event.preventDefault();
+                    Swal.fire({
+                        title: "Warning",
+                        text: "Are you sure delete this category??",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "Delete",
+                        confirmButtonColor: "#c93204",
+                    }).then(result => {
+                        if (result.isConfirmed) {
+                            window.location.reload();
+                            form.submit();
+                        }
+                    });
+                })
+            });
+        });
+    </script>
 @endsection

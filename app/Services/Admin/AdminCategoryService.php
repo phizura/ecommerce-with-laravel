@@ -75,14 +75,30 @@ class AdminCategoryService
         });
     }
 
+    public function deleteCategory($id)
+    {
+        $category = $this->getOneCategoryById($id);
+
+        if ($category['image']) {
+            if (File::exists(storage_path('/app/public/uploads/category/thumb/' . $category->image))) {
+                File::delete(storage_path('/app/public/uploads/category/' . $category->image));
+                File::delete(storage_path('/app/public/uploads/category/thumb/' . $category->image));
+            } else {
+                abort('500', 'File not found.');
+            }
+        }
+        $this->category->delete($id);
+    }
+
+
     private function makeImage($data, $type = null)
     {
 
         if ($data['image_id']) {
             if ($type == 'update') {
                 if (File::exists(storage_path('/app/public/uploads/category/thumb/' . $data['old_image_id']))) {
-                    File::delete(storage_path('/app/public/uploads/category/'.$data['old_image_id']));
-                    File::delete(storage_path('/app/public/uploads/category/thumb/'.$data['old_image_id']));
+                    File::delete(storage_path('/app/public/uploads/category/' . $data['old_image_id']));
+                    File::delete(storage_path('/app/public/uploads/category/thumb/' . $data['old_image_id']));
                 } else {
                     abort('500', 'File not found.');
                 }

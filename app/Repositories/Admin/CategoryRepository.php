@@ -26,12 +26,12 @@ class CategoryRepository implements CategoryInterface
 
     public function create(array $data)
     {
-        return $this->model->create($data);
+        $this->model->create($data);
     }
 
     public function update($id, $data)
     {
-        return $this->model->find($id)->update($data);
+        $this->model->find($id)->update($data);
     }
 
     public function find($id)
@@ -39,4 +39,8 @@ class CategoryRepository implements CategoryInterface
         return $this->model->find($id);
     }
 
+    public function delete($id)
+    {
+        $this->model->find($id)->delete();
+    }
 }

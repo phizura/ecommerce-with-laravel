@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Services\Admin\AdminCategoryService;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -59,6 +58,12 @@ class CategoryController extends Controller
 
     public function destroy(string $id)
     {
-        //
+        try{
+
+            $this->adminCategoryService->deleteCategory($id);
+            return redirect()->back()->with('swalSuccess', 'Successfully deleted category');
+        }catch(\Exception $err){
+            return redirect()->back()->with('swalError', $err->getMessage());
+        }
     }
 }

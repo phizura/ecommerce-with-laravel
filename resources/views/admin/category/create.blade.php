@@ -87,6 +87,9 @@
         $(document).ready(function() {
             $('#category-form').on('submit', function() {
                 $('#submit-category').prop('disabled', true);
+                const load = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  Loading...`
+                $('#submit-category').html(load);
             });
         });
 
