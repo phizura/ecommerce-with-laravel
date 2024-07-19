@@ -13,3 +13,27 @@
         {{ session('success') }}
     </div>
 @endif
+
+@if (session()->has('swalSuccess'))
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        Swal.fire({
+            title: "Berhasil!",
+            text: "{{ session('swalSuccess') }}",
+            icon: "success"
+        });
+    })
+</script>
+@endif
+
+@if (session()->has('swalError'))
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        Swal.fire({
+            title: "Gagal!",
+            text: "{{ session('swalError') }}",
+            icon: "error"
+        });
+    })
+</script>
+@endif
