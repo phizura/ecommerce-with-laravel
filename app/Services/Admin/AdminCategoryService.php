@@ -4,6 +4,7 @@
 namespace App\Services\Admin;
 
 use App\Interfaces\Admin\CategoryInterface;
+use App\Interfaces\Admin\SubCategoryInterface;
 use App\Interfaces\Admin\TempImagesInterface;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -14,13 +15,19 @@ use Intervention\Image\ImageManagerStatic as Image;
 class AdminCategoryService
 {
     public function __construct(
-        private CategoryInterface $category,
-        private TempImagesInterface $tempImages
+        protected CategoryInterface $category,
+        protected TempImagesInterface $tempImages,
+        protected SubCategoryInterface $subCategory
     ) {
     }
 
-    public function getAllCategory()
+    //! Category
+    public function getAllCategory($type = null)
     {
+        if ($type === 'ascending') {
+            return $this->category->getAscByName();
+        }
+
         return $this->category->getAll();
     }
 
@@ -40,12 +47,9 @@ class AdminCategoryService
         DB::transaction(function () use ($data) {
 
             $newData = collect($data)
-                ->except('image_id')
-                ->merge([
-                    'image' => $data['image_id']
-                ]);
-
+                ->except('image_id');
             $category = $this->category->create($newData->all());
+
             $response = $this->makeImage([
                 'image_id' => $data['image_id'],
                 'category_id' => $category->id
@@ -91,11 +95,12 @@ class AdminCategoryService
     }
 
 
-    private function makeImage($data, $type = null)
+    protected function makeImage($data, $type = null)
     {
 
         if ($data['image_id']) {
             if ($type == 'update') {
+                dd('masuk');
                 if (File::exists(storage_path('/app/public/uploads/category/thumb/' . $data['old_image_id']))) {
                     File::delete(storage_path('/app/public/uploads/category/' . $data['old_image_id']));
                     File::delete(storage_path('/app/public/uploads/category/thumb/' . $data['old_image_id']));
@@ -117,12 +122,41 @@ class AdminCategoryService
 
             $thumbFile = storage_path('/app/public/uploads/category/thumb/' . $newImageName);
             $img = Image::make($oldFile);
-            $img->resize(450, 600);
+            $img->fit(450, 600, function ($constraint) {
+                $constraint->upsize();
+            });
             $img->save($thumbFile);
 
             File::move($oldFile, $newFile);
             $tempImage->delete();
             return $newImageName;
         }
+    }
+
+    //! Sub Category
+
+    public function getListSubCategory(int $value)
+    {
+        return $this->subCategory->getPaginate($value);
+    }
+
+    public function createSubCategory($data)
+    {
+        $this->subCategory->create($data);
+    }
+
+    public function getOneSubCategoryById($id)
+    {
+        return $this->subCategory->getOne($id);
+    }
+
+    public function updateSubCategory($id, $data)
+    {
+        return $this->subCategory->update($id, $data);
+    }
+
+    public function deleteSubCategory($id)
+    {
+        $this->subCategory->delete($id);
     }
 }

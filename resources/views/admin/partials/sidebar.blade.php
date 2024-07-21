@@ -11,7 +11,7 @@
             'icon' => '<i class="nav-icon fas fa-file-alt"></i>',
         ],
         [
-            'route' => 'admin.dashboard',
+            'route' => 'sub-category.index',
             'parph' => 'Sub Category',
             'icon' => '<i class="nav-icon fas fa-file-alt"></i>',
         ],

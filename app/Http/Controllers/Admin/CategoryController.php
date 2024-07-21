@@ -30,9 +30,9 @@ class CategoryController extends Controller
 
             $this->adminCategoryService->createCategory($request->except('_token'));
             return redirect()->route('categories.index')->with('swalSuccess', 'Category added successfully');
-        } catch (\Exception $e) {
+        } catch (\Exception $err) {
 
-            return redirect()->back()->with('swalError', $e->getMessage());
+            return redirect()->back()->with('swalError', $err->getMessage());
         }
     }
 

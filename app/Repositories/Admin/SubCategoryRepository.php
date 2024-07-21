@@ -2,18 +2,18 @@
 
 namespace App\Repositories\Admin;
 
-use App\Interfaces\Admin\CategoryInterface;
-use App\Models\Category;
+use App\Interfaces\Admin\SubCategoryInterface;
+use App\Models\SubCategory;
 
-class CategoryRepository implements CategoryInterface
+class SubCategoryRepository implements SubCategoryInterface
 {
-    public function __construct(private Category $model)
+    public function __construct(protected SubCategory $model)
     {
     }
 
     public function getAll()
     {
-        return $this->model->latest()->filter(request(['keyword']))->get();
+
     }
 
     public function getPaginate(int $value)
@@ -24,9 +24,9 @@ class CategoryRepository implements CategoryInterface
             ->withQueryString();
     }
 
-    public function getAscByName()
+    public function getOne($id)
     {
-        return $this->model->orderBy('name', 'ASC')->get();
+        return $this->model->find($id);
     }
 
     public function create(array $data)
@@ -34,18 +34,13 @@ class CategoryRepository implements CategoryInterface
         return $this->model->create($data);
     }
 
-    public function update($id, $data)
+    public function update($id, array $data)
     {
         return $this->model->find($id)->update($data);
     }
 
-    public function find($id)
-    {
-        return $this->model->find($id);
-    }
-
     public function delete($id)
     {
-        return $this->model->find($id)->delete();
+        $this->model->find($id)->delete();
     }
 }

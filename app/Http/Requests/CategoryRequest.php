@@ -21,7 +21,7 @@ class CategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->route('category');
+        $id = $this->route('subCategory');
         if ($this->isMethod('post')) {
             return [
                 "name" => "required",

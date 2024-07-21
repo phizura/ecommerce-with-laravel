@@ -1,12 +1,11 @@
 <?php
 
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\TempImagesController;
+use App\Http\Controllers\Admin\SubCategoryController;
+use App\Http\Controllers\Admin\UtilsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,21 +33,13 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
         Route::get('/logout', [AuthController::class, 'logout'])->name('admin.logout');
 
-        // temp image
-        Route::post('/upload-temp-image', [TempImagesController::class, 'create'])->name('temp-images.create');
+        //? temp image
+        Route::post('/upload-temp-image', [UtilsController::class, 'createTempImages'])->name('temp-images.create');
 
-        Route::get('/getSlug', function (Request $request) {
-            $slug = '';
-            if (!empty($request->title)) {
-                $slug = Str::slug($request->title);
-            };
-            return response()->json([
-                'status' => true,
-                'slug' => $slug
-            ]);
-        })->name('getSlug');
+        //? create slug
+        Route::get('/getSlug', [UtilsController::class, 'createSlug'])->name('getSlug');
 
-        // Category
+        //? Category
         Route::group(
             [
                 'controller' => CategoryController::class,
@@ -62,6 +53,24 @@ Route::group(['prefix' => 'admin'], function () {
                 Route::get('/create', 'create')->name('create');
                 Route::get('/{category}/edit', 'edit')->name('edit');
                 Route::put('/{category}', 'update')->name('update');
+                Route::delete('/{category}', 'destroy')->name('destroy');
+            }
+        );
+
+        //? Sub Category
+        Route::group(
+            [
+                'controller' => SubCategoryController::class,
+                'as' => 'sub-category.',
+                'prefix' => 'sub-category'
+            ],
+            function () {
+
+                Route::get('/', 'index')->name('index');
+                Route::post('/', 'store')->name('store');
+                Route::get('/create', 'create')->name('create');
+                Route::get('/{subCategory}/edit', 'edit')->name('edit');
+                Route::put('/{subCategory}', 'update')->name('update');
                 Route::delete('/{category}', 'destroy')->name('destroy');
             }
         );

@@ -5,7 +5,7 @@ namespace App\Services\Admin;
 
 use App\Interfaces\Admin\TempImagesInterface;
 
-class TempImagesService
+class UtilsService
 {
     public function __construct(private TempImagesInterface $tempImage)
     {
@@ -22,5 +22,5 @@ class TempImagesService
         return $tempImage;
     }
 
-    
+
 }
