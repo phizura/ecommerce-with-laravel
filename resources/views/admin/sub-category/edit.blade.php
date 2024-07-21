@@ -13,7 +13,7 @@
     <section class="content">
         <!-- Default box -->
         <div class="container-fluid">
-            <form action="{{ route('sub-category.update', $subCategory->id) }}" method="POST">
+            <form action="{{ route('sub-category.update', $subCategory->id) }}" method="POST" id="subCategory-form">
                 @csrf
                 @method('put')
                 <div class="card">
@@ -84,9 +84,9 @@
                                             <option value="1" selected>Active</option>
                                             <option value="0">Block</option>
                                         @else
-                                        <option value="">--Select Status--</option>
-                                        <option value="1">Active</option>
-                                        <option value="0" selected>Block</option>
+                                            <option value="">--Select Status--</option>
+                                            <option value="1">Active</option>
+                                            <option value="0" selected>Block</option>
                                         @endif
                                     </select>
                                     @error('is_active')
@@ -101,7 +101,7 @@
                     </div>
                 </div>
                 <div class="pb-5 pt-3">
-                    <button class="btn btn-primary" type="submit">Create</button>
+                    <button class="btn btn-primary" type="submit" id="submit-subCategory">Edit</button>
                     <a href="{{ route('sub-category.index') }}" class="btn btn-outline-dark ml-3">Cancel</a>
                 </div>
             </form>
@@ -114,6 +114,13 @@
 @section('customJS')
     <script>
         $(document).ready(function() {
+            $('#subCategory-form').on('submit', function() {
+                $('#submit-subCategory').prop('disabled', true);
+                const load = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  Loading...`
+                $('#submit-subCategory').html(load);
+            });
+
             $("#name").change(function() {
                 element = $(this);
                 $.ajax({

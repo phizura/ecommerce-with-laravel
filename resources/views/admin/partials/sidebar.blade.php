@@ -16,7 +16,7 @@
             'icon' => '<i class="nav-icon fas fa-file-alt"></i>',
         ],
         [
-            'route' => 'admin.dashboard',
+            'route' => 'brand.index',
             'parph' => 'Brands',
             'icon' => '<svg class="h-6 nav-icon w-6 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">

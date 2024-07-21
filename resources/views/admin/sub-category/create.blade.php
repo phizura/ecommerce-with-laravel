@@ -13,7 +13,7 @@
     <section class="content">
         <!-- Default box -->
         <div class="container-fluid">
-            <form action="{{ route('sub-category.store') }}" method="POST">
+            <form action="{{ route('sub-category.store') }}" method="POST" id="subCategory-form">
                 <div class="card">
                     <div class="card-body">
                         @csrf
@@ -76,9 +76,15 @@
                                     <label for="name">Status</label>
                                     <select name="is_active" id="status"
                                         class="form-control @error('is_active') is-invalid @enderror">
-                                        <option value="" selected>--Select Status--</option>
+                                        @if (old('is_active', $subCategory->is_active) == 1)
+                                            <option value="">--Select Status--</option>
+                                            <option value="1" selected>Active</option>
+                                            <option value="0">Block</option>
+                                        @else
+                                        <option value="">--Select Status--</option>
                                         <option value="1">Active</option>
-                                        <option value="0">Block</option>
+                                        <option value="0" selected>Block</option>
+                                        @endif
                                     </select>
                                     @error('is_active')
                                         <p class="invalid-feedback">
@@ -92,7 +98,7 @@
                     </div>
                 </div>
                 <div class="pb-5 pt-3">
-                    <button class="btn btn-primary" type="submit">Create</button>
+                    <button class="btn btn-primary" type="submit" id="submit-subCategory">Create</button>
                     <a href="{{ route('sub-category.index') }}" class="btn btn-outline-dark ml-3">Cancel</a>
                 </div>
             </form>
@@ -104,7 +110,15 @@
 @endsection
 @section('customJS')
     <script>
+
         $(document).ready(function() {
+            $('#subCategory-form').on('submit', function() {
+                $('#submit-category').prop('disabled', true);
+                const load = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  Loading...`
+                $('#submit-subCategory').html(load);
+            });
+
             $("#name").change(function() {
                 element = $(this);
                 $.ajax({
