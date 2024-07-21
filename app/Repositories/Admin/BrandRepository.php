@@ -13,15 +13,14 @@ class BrandRepository implements BrandInterface
 
     public function getAll()
     {
-
     }
 
     public function getPaginate(int $number)
     {
-        return $this->model->latest()->paginate($number);
-            // ->filter(request(['keyword']))
-
-            // ->withQueryString();
+        return $this->model->latest()
+            ->filter(request(['keyword']))
+            ->paginate($number)
+            ->withQueryString();
     }
 
     public function getOne($id)

@@ -18,7 +18,7 @@
         <!-- Default box -->
         <div class="container-fluid">
             <div class="card">
-                <form action="{{ route('sub-category.index') }}">
+                <form action="{{ route('brand.index') }}">
                     <div class="card-header">
                         <div class="card-tools">
                             <div class="input-group input-group" style="width: 250px">
