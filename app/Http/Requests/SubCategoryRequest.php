@@ -49,6 +49,7 @@ class SubCategoryRequest extends FormRequest
             'slug.max' => 'Data melebihi batas maximal karakter',
             'category_id.required' => 'Pilih Category dahulu',
             'category_id.exists' => 'Category tidak ditemukan',
+            'is_active.required' => 'Field tidak boleh kosong',
             'is_active.in' => 'Status berada diluar jangkauan'
         ];
     }
