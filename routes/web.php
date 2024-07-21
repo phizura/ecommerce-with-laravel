@@ -6,7 +6,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\UtilsController;
-
+use App\Http\Controllers\BrandController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -72,6 +72,24 @@ Route::group(['prefix' => 'admin'], function () {
                 Route::get('/{subCategory}/edit', 'edit')->name('edit');
                 Route::put('/{subCategory}', 'update')->name('update');
                 Route::delete('/{category}', 'destroy')->name('destroy');
+            }
+        );
+
+        //? Brands
+        Route::group(
+            [
+                'controller' => BrandController::class,
+                'as' => 'brand.',
+                'prefix' => 'brand'
+            ],
+            function () {
+
+                Route::get('/', 'index')->name('index');
+                Route::post('/', 'store')->name('store');
+                Route::get('/create', 'create')->name('create');
+                Route::get('/{brand}/edit', 'edit')->name('edit');
+                Route::put('/{brand}', 'update')->name('update');
+                Route::delete('/{brand}', 'destroy')->name('destroy');
             }
         );
     });
