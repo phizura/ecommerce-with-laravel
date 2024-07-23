@@ -37,6 +37,7 @@
                 <div class="card-body table-responsive p-0">
                     <table class="table table-hover text-nowrap">
                         <thead>
+                            @if ($brands->isNotEmpty())
                             <tr>
                                 <th width="60">No.</th>
                                 <th>Name</th>
@@ -46,7 +47,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if ($brands->isNotEmpty())
+
                                 @foreach ($brands as $index => $brand)
                                     <tr>
                                         <td>{{ $index + $brands->firstItem() }}</td>
@@ -71,8 +72,8 @@
                                             @endif
                                         </td>
                                         <td class="d-inline-flex">
-                                            <a href="{{ route('brand.edit', $brand->id) }}"
-                                                data-mdb-popover-init title="Edit" data-mdb-trigger="hover">
+                                            <a href="{{ route('brand.edit', $brand->id) }}" data-mdb-popover-init
+                                                title="Edit" data-mdb-trigger="hover">
                                                 <svg class="filament-link-icon w-4 h-4 mr-1"
                                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                                     fill="currentColor" aria-hidden="true">
@@ -81,8 +82,8 @@
                                                     </path>
                                                 </svg>
                                             </a>
-                                            <form action="{{ route('brand.destroy', $brand->id) }}"
-                                                method="post" id="delete-form">
+                                            <form action="{{ route('brand.destroy', $brand->id) }}" method="post"
+                                                id="delete-form">
                                                 @csrf @method('delete')
                                                 <button class="text-danger w-4 h-4 mr-1 border-0 bg-transparent"
                                                     data-mdb-popover-init title="Delete" data-mdb-trigger="hover"
@@ -101,12 +102,15 @@
                                     </tr>
                                 @endforeach
                             @else
-                                Data Not Found.
+                                <div class="d-flex justify-content-center">
+                                    Data not found.
+                                </div>
                             @endif
-                        </tbody>
                     </table>
+                    </tbody>
                 </div>
                 <div class="card-footer clearfix">
+                    {{ $brands->links() }}
                 </div>
             </div>
         </div>

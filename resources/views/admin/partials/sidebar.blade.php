@@ -2,21 +2,25 @@
     $contents = [
         [
             'route' => 'admin.dashboard',
+            'request' => 'admin/dashboard',
             'parph' => 'Dashboard',
             'icon' => '<i class="nav-icon fas fa-tachometer-alt"></i>',
         ],
         [
             'route' => 'categories.index',
+            'request' => 'admin/categories*',
             'parph' => 'Category',
             'icon' => '<i class="nav-icon fas fa-file-alt"></i>',
         ],
         [
             'route' => 'sub-category.index',
+            'request' => 'admin/sub-category*',
             'parph' => 'Sub Category',
             'icon' => '<i class="nav-icon fas fa-file-alt"></i>',
         ],
         [
             'route' => 'brand.index',
+            'request' => 'admin/brands*',
             'parph' => 'Brands',
             'icon' => '<svg class="h-6 nav-icon w-6 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
@@ -27,31 +31,37 @@
         ],
         [
             'route' => 'admin.dashboard',
+            'request' => 'admin/dashboard*',
             'parph' => 'Products',
             'icon' => '<i class="nav-icon fas fa-tag"></i>',
         ],
         [
             'route' => 'admin.dashboard',
+            'request' => 'admin/dashboard*',
             'parph' => 'Shipping',
             'icon' => '<i class="fas fa-truck nav-icon"></i>',
         ],
         [
             'route' => 'admin.dashboard',
+            'request' => 'admin/dashboard*',
             'parph' => 'Orders',
             'icon' => '<i class="nav-icon fas fa-shopping-bag"></i>',
         ],
         [
             'route' => 'admin.dashboard',
+            'request' => 'admin/dashboard*',
             'parph' => 'Discount',
             'icon' => '<i class="nav-icon  fa fa-percent" aria-hidden="true"></i>',
         ],
         [
             'route' => 'admin.dashboard',
+            'request' => 'admin/dashboard*',
             'parph' => 'Users',
             'icon' => '<i class="nav-icon  fas fa-users"></i>',
         ],
         [
             'route' => 'admin.dashboard',
+            'request' => 'admin/dashboard*',
             'parph' => 'Pages',
             'icon' => '<i class="nav-icon  far fa-file-alt"></i>',
         ],
@@ -74,7 +84,7 @@
                 data-accordion="false">
                 @foreach ($contents as $content)
                     <li class="nav-item">
-                        <a href="{{ route($content['route']) }}" class="nav-link">
+                        <a href="{{ route($content['route']) }}" class="nav-link {{ Request::is($content['request']) ? 'active' : '' }}">
                             {!! $content['icon'] !!}
                             <p>{{ $content['parph'] }}</p>
                         </a>

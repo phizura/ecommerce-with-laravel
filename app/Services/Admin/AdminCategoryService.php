@@ -116,8 +116,12 @@ class AdminCategoryService
             $oldFile = storage_path('/app/public/' . $tempImage->name);
             $newFile = storage_path('/app/public/uploads/category/' . $newImageName);
 
+            if (!File::exists($oldFile)) {
+                abort(500, 'Image file not found at: ' . $oldFile);
+            }
+
             if (!File::exists(storage_path('/app/public/uploads/category/thumb'))) {
-                File::makeDirectory(storage_path('/app/public/uploads/category/thumb'), 0755, true, true);
+                File::makeDirectory(storage_path('/app/public/uploads/category/thumb'), 755, true, true);
             }
 
             $thumbFile = storage_path('/app/public/uploads/category/thumb/' . $newImageName);

@@ -80,7 +80,7 @@ Route::group(['prefix' => 'admin'], function () {
             [
                 'controller' => BrandController::class,
                 'as' => 'brand.',
-                'prefix' => 'brand'
+                'prefix' => 'brands'
             ],
             function () {
 

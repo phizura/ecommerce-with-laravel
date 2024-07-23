@@ -76,14 +76,20 @@
                                     <label for="name">Status</label>
                                     <select name="is_active" id="status"
                                         class="form-control @error('is_active') is-invalid @enderror">
-                                        @if (old('is_active', $subCategory->is_active) == 1)
-                                            <option value="">--Select Status--</option>
-                                            <option value="1" selected>Active</option>
-                                            <option value="0">Block</option>
+                                        @if (old('is_active'))
+                                            @if (old('is_active') == 1)
+                                                <option value="">--Select Status--</option>
+                                                <option value="1" selected>Active</option>
+                                                <option value="0">Block</option>
+                                            @else
+                                                <option value="">--Select Status--</option>
+                                                <option value="1">Active</option>
+                                                <option value="0" selected>Block</option>
+                                            @endif
                                         @else
-                                        <option value="">--Select Status--</option>
-                                        <option value="1">Active</option>
-                                        <option value="0" selected>Block</option>
+                                            <option value="" selected>--Select Status--</option>
+                                            <option value="1">Active</option>
+                                            <option value="0">Block</option>
                                         @endif
                                     </select>
                                     @error('is_active')
