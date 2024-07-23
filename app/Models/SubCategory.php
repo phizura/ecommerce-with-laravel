@@ -11,15 +11,19 @@ class SubCategory extends Model
 
     protected $guarded = ['id'];
 
-     public function category()
-     {
-        return $this->belongsTo(Category::class);
-     }
-
-     public function scopeFilter($query, $filter)
+    public function category()
     {
-        if(isset($filter['keyword']) ?? false)
-        {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    public function scopeFilter($query, $filter)
+    {
+        if (isset($filter['keyword']) ?? false) {
             return $query->where('name', 'Like', '%' . $filter['keyword'] . '%');
         }
     }

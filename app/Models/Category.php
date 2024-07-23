@@ -16,6 +16,11 @@ class Category extends Model
         return $this->hasMany(SubCategory::class);
     }
 
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
     public function scopeFilter($query, $filter)
     {
         if(isset($filter['keyword']) ?? false)

@@ -11,6 +11,11 @@ class Brand extends Model
 
     protected $guarded = ['id'];
 
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
     public function scopeFilter($query, $filter)
     {
         if(isset($filter['keyword']) ?? false)
