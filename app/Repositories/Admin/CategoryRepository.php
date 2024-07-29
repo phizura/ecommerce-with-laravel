@@ -44,6 +44,11 @@ class CategoryRepository implements CategoryInterface
         return $this->model->find($id);
     }
 
+    public function findWithSubCategory($id)
+    {
+        return $this->model->with('subCategories:category_id,id,name')->find($id);
+    }
+
     public function delete($id)
     {
         return $this->model->find($id)->delete();

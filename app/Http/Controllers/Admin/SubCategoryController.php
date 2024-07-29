@@ -58,11 +58,11 @@ class SubCategoryController extends Controller
 
     public function destroy($id)
     {
-        try{
+        try {
 
             $this->categoryService->deleteSubCategory($id);
             return redirect()->back()->with('swalSuccess', 'Successfully deleted category');
-        }catch(\Exception $err){
+        } catch (\Exception $err) {
             return redirect()->back()->with('swalError', $err->getMessage());
         }
     }

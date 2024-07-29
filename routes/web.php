@@ -5,8 +5,10 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\UtilsController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,6 +40,8 @@ Route::group(['prefix' => 'admin'], function () {
 
         //? create slug
         Route::get('/getSlug', [UtilsController::class, 'createSlug'])->name('getSlug');
+
+        Route::get('/getDropDown', [UtilsController::class, 'getDropDown'])->name('getDropDown');
 
         //? Category
         Route::group(
@@ -90,6 +94,24 @@ Route::group(['prefix' => 'admin'], function () {
                 Route::get('/{brand}/edit', 'edit')->name('edit');
                 Route::put('/{brand}', 'update')->name('update');
                 Route::delete('/{brand}', 'destroy')->name('destroy');
+            }
+        );
+
+        //? Product Images
+        Route::group(
+            [
+                'controller' => ProductController::class,
+                'as' => 'products.',
+                'prefix' => 'products'
+            ],
+            function () {
+
+                Route::get('/', 'index')->name('index');
+                Route::post('/', 'store')->name('store');
+                Route::get('/create', 'create')->name('create');
+                Route::get('/{id}/edit', 'edit')->name('edit');
+                Route::put('/{id}', 'update')->name('update');
+                Route::delete('/{id}', 'destroy')->name('delete');
             }
         );
     });

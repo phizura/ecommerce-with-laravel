@@ -24,6 +24,16 @@ class SubCategoryRepository implements SubCategoryInterface
             ->withQueryString();
     }
 
+    public function getAscByName()
+    {
+        return $this->model->with('category')->orderBy('name', 'ASC')->get();
+    }
+
+    public function getBycategoryId($id)
+    {
+        return $this->model->with('category')->where('category_id', $id)->get();
+    }
+
     public function getOne($id)
     {
         return $this->model->find($id);

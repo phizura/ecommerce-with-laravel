@@ -11,6 +11,11 @@ class BrandService
     {
     }
 
+    public function getAllBrands()
+    {
+        return $this->brand->getAscByName();
+    }
+
     public function getOneBrandById($id)
     {
         return $this->brand->getOne($id);

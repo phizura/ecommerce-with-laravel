@@ -121,7 +121,7 @@ class AdminCategoryService
             }
 
             if (!File::exists(storage_path('/app/public/uploads/category/thumb'))) {
-                File::makeDirectory(storage_path('/app/public/uploads/category/thumb'), 755, true, true);
+                File::makeDirectory(storage_path('/app/public/uploads/category/thumb'), 0755, true, true);
             }
 
             $thumbFile = storage_path('/app/public/uploads/category/thumb/' . $newImageName);
@@ -138,6 +138,15 @@ class AdminCategoryService
     }
 
     //! Sub Category
+
+    public function getAllSubCategories($type)
+    {
+        if ($type === 'ascending') {
+            return $this->subCategory->getAscByName();
+        }
+
+        return $this->subCategory->getAll();
+    }
 
     public function getListSubCategory(int $value)
     {

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->bigInteger('price');
             $table->bigInteger('compare_price')->nullable();
-            $table->unsignedBigInteger('category_id')->nullable();
+            $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('sub_category_id')->nullable();
             $table->unsignedBigInteger('brand_id')->nullable();
             $table->enum('is_featured', ['Yes', 'No'])->default("No");

@@ -1,0 +1,61 @@
+services:
+    # Laravel service
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: laravel-belajar-ecommerce
+        container_name: laravel-belajar-ecommerce-app
+        restart: unless-stopped
+        working_dir: /var/www/html
+        volumes:
+            - .:/var/www/html
+        ports:
+            - "8000:80"
+        depends_on:
+            - mysql
+        networks:
+            - laravel-ecommerce
+
+    # MySQL service
+    mysql:
+        image: mysql:8.0
+        container_name: laravel-belajar-ecommerce-database
+        restart: unless-stopped
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+            MYSQL_DATABASE: ecommerce-belajar
+            MYSQL_USER: dev
+            MYSQL_PASSWORD: ""
+            MYSQL_ROOT_PASSWORD: ""
+        volumes:
+            - laravel-ecommerce:/var/lib/mysql
+        ports:
+            - "3306:3306"
+        networks:
+            - laravel-ecommerce
+
+    # phpMyAdmin service
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: laravel-belajar-ecommerce-database-apk
+        restart: unless-stopped
+        environment:
+            PMA_HOST: mysql
+            PMA_USER: root
+            PMA_PASSWORD: ""
+            MYSQL_ROOT_PASSWORD: ""
+            PMA_ARBITRARY: "1"
+        ports:
+            - "8080:80"
+        depends_on:
+            - mysql
+        networks:
+            - laravel-ecommerce
+
+networks:
+    laravel-ecommerce:
+        driver: bridge
+
+volumes:
+    mysql_data:

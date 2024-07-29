@@ -15,8 +15,10 @@
     <link rel="stylesheet" href="{{ asset('admin-assets/css/adminlte.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('admin-assets/plugins/dropzone/min/dropzone.min.css') }}">
-    
+
     <link rel="stylesheet" href="{{ asset('admin-assets/css/custom.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('admin-assets/plugins/summernote/summernote.min.css') }}">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {{-- sweetalert --}}
@@ -54,12 +56,18 @@
     {{-- SweetAlert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.1/dist/sweetalert2.all.min.js"></script>
 
+    <script src="{{ asset('admin-assets/plugins/summernote/summernote.min.js') }}"></script>
+
     {{-- Ajax Config --}}
     <script type="text/javascript">
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+        });
+
+        $(document).ready(function() {
+            $('.summernote').summernote();
         });
     </script>
 

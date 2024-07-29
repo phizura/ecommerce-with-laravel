@@ -3,11 +3,17 @@
 
 namespace App\Services\Admin;
 
+use App\Interfaces\Admin\CategoryInterface;
+use App\Interfaces\Admin\SubCategoryInterface;
 use App\Interfaces\Admin\TempImagesInterface;
 
 class UtilsService
 {
-    public function __construct(private TempImagesInterface $tempImage)
+    public function __construct(
+        protected TempImagesInterface $tempImage,
+        protected  SubCategoryInterface $subCategory,
+        protected  CategoryInterface $category
+        )
     {
     }
 
@@ -22,5 +28,12 @@ class UtilsService
         return $tempImage;
     }
 
+    public function distributeDropdownData($id)
+    {
+        $category = $this->category->findWithSubCategory($id);
+        $subCategory = $category->toArray()[0]['sub_categories'];
+
+        return $subCategory;
+    }
 
 }

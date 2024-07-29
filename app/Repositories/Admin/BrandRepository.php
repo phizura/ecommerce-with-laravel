@@ -23,6 +23,11 @@ class BrandRepository implements BrandInterface
             ->withQueryString();
     }
 
+    public function getAscByName()
+    {
+        return $this->model->orderBy('name', 'ASC')->get();
+    }
+
     public function getOne($id)
     {
         return $this->model->find($id);

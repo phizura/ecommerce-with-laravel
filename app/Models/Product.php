@@ -10,6 +10,7 @@ class Product extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+    protected $with = ['category', 'subCategory', 'brand'];
 
     public function category()
     {
